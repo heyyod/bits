@@ -10,3 +10,5 @@ description of the input/outputs of a renderpass. Defines the layout/format, not
 **Framebuffer**
 A collection of ImageViews that correspond to the Attachments in a renderpass. EG it 'binds' imageViews together for a renderpass to use. Note that ImagelessFramebuffer allows delaying the actual binding until render-pass begin (inside command buffer recording)
 
+![https://raw.githubusercontent.com/David-DiGioia/vulkan-diagrams/main/render_pass_swapchain.png](Image-ImageView-Attachment-Framebuffer.assets/render_pass_swapchain.png)
+
