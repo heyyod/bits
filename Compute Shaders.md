@@ -10,11 +10,11 @@ In the compute unit we always operate on data in parallel using very wide SIMD u
 
 A Diagram:
 
-![image-20211108235602144](Compute Shaders.assets/image-20211108235602144.png) 
+<img src="Compute Shaders.assets/image-20211108235602144.png"> 
 
 Inside a SIMD executor a single item/cell is called a thread/lane/cuda core.
 
-![image-20211108235749146](Compute Shaders.assets/image-20211108235749146.png) 
+<img src="Compute Shaders.assets/image-20211108235749146.png"> 
 
 So a thread is a single item that the GPU can do operations on. Don't confuse it with the cpu threads. A group of threads may also be called a wavefront/wave.
 
@@ -50,11 +50,11 @@ void vkCmdDispatch(
 
 Here, groupCount* specifies how many local work groups we want to dispatch in each dimension. If our workgroup size is 256 (this is specified in the shader), we need to divide the number of elements by 256 and round up.
 
-![image-20211108235355020](Compute Shaders.assets/image-20211108235355020.png) 
+<img src="Compute Shaders.assets/image-20211108235355020.png"> 
 
 We can skip the Graphics Processor with compute shaders:
 
-![image-20211108235457488](Compute Shaders.assets/image-20211108235457488.png) 
+<img src="Compute Shaders.assets/image-20211108235457488.png"> 
 
 ## Sources:
 
