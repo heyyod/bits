@@ -1,0 +1,36 @@
+WHAT THE FUCK IS UP WITH DESCRIPTORS:
+
+- So we have a shader that we need to pass to is certain data/resources. This data is located
+  in a buffer that we have allocated. This buffer is mapped so that the CPU can see it and write
+  into it. BUT just writing out data there doen't mean shit.
+
+- What we need to do is "declare" the resource that we are going to pass to a shader and basicaly
+  point to where it's at. In vulkan, this is done by a descriptor (for each resource) when calling
+  vkUpdateDescriptorSets. The info we pass basicaly say: here is the buffer I have, here is its
+  type, here is the binding it's gonna be read from, and here is the set it is grouped in.
+
+- But wait. What the fuck is a set?
+  Well, we basicaly never use a single descriptor as it is apart from creating it and binding it
+  to the actual buffer where we write our data. We always group them in descriptor sets.
+
+- Now these descriptor sets are created based on a descriptor set layout that we have declared.
+  This layout contains all the resource bindings that are used in a shader. So basically a single
+  binding in a set matches a single descriptor that we are later going to bind to a piece of memory.
+- From a layout we can create multiple descriptor sets. But the creation of descriptor sets is done
+  through a descriptor pool. We use that pool to say to vulkan the number of descriptors it's allowed
+  to allocate for each type. Then we allocate a descriptor which returns a handle. This is the handle
+  we use to bind the sets before the draw commands.
+
+- But a layout is also used in another important way. When creating a pipeline we specify an array
+  of descriptor sets layouts that is uses. This basicaly tells the pipeline what kind of data to
+  expext when we actually use it (by binding it before a draw call).
+
+- So the commands look like this:
+    1. Bind the pipeline you want
+    2. Bind the descriptor sets you want
+    3. Draw 
+
+- PS. We usually seperate descriptors into sets depending on the resource usage frequency. This is
+  because the binding of a set is done before a draw call and is generally an expensive operation.
+  So if for less frequently used resources we do less bindings it's better.
+  OBVIOULSY IT'S MORE COMPLIATED.
